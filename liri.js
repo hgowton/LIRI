@@ -2,19 +2,20 @@ require("dotenv").config();
 const keys = require("./keys.js")
 var Spotify = require('node-spotify-api');
 var axios = require("axios");
+var fs = require("fs");
 
 var a = process.argv[2]
 var b = process.argv[3]
 // console.log(a)
 // console.log(b)
 
-var song = '';
+var song = 'The Sign';
 for (let i = 3; i < process.argv.length; i++) {
   song = song + process.argv[i] + ' ';
   console.log(song);
 }
 
-var word = '';
+var word = 'Mr.Nobody';
 for (let i = 3; i < process.argv.length; i++) {
   word = word + process.argv[i] + ' ';
 //   console.log(word);
@@ -37,12 +38,10 @@ function songs (){
         }
         songI = data.tracks.items
         console.log(songI); 
-        console.log("Artists: " + songI[0].artists[0])
+        console.log("Artists: " + songI[0].artists[0].name)
         console.log("Song Title: " + songI[0].name)
         console.log("Song Preview: " + songI[0].preview_url)
-        console.log("Album Title: " + songI[0].album.name)
-        console.log("ARtists: " + songI[0].album.artists[0])
-        
+        console.log("Album Title: " + songI[0].album.name)        
     });
 }
 
@@ -56,9 +55,11 @@ function bands (){
     .then(function(response) {
         // console.log(response);
         for (i = 0; i < response.data.length; i++) {
+            var time = response.data[i].datetime
             console.log(response.data[i].venue.name)
             console.log(response.data[i].venue.country + ", " + response.data[i].venue.city)
             console.log(response.data[i].datetime)
+            console.log(moment(time).format('MMMM Do YYYY h:mm:ss a'))
         }
     })
     .catch(function(error) {
@@ -94,9 +95,9 @@ function movie () {
     .then(function(response) {
         console.log(response);
         infoM = response.data
-        output = infoM.Title + " was released in " + infoM.Year + ".\n"
+        console.log(infoM.Title + " was released in " + infoM.Year + ".")
         console.log("IMDB Rating: " + infoM.imdbRating)
-        console.log("Rotten Tomatoes Rating: XXXX" + infoM.Ratings)
+        console.log("Rotten Tomatoes Rating: " + infoM.Ratings[1].Value)
         console.log("Produced in " + infoM.Country)
         console.log("Native Language: " + infoM.Language)
         console.log("Plot of Movie: " + infoM.Plot)
@@ -125,12 +126,24 @@ function movie () {
     });
 }
 
+function newS () {
+    var data = fs.readFileSync("random.txt", "utf8") 
+        var dataArr = data.split(",");
+        
+        console.log("needs to happen 1st: " + dataArr[1]);
+        song = dataArr[1]
+    }
+
 if (a == "movie-this") {
     movie();
 }else if (a == "concert-this") {
     bands();
 }else if (a == "spotify-this-song") {
     songs();
-}
+} else if (a == "do-what-it-says") {
+    newS();
+    songs();
+    }
+
 
 
