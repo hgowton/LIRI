@@ -95,10 +95,7 @@ function bands (){
 }
 
 //OMBI call
-function term () {
-
-    //removes first three indexes and joins all remaining index with space
-    var word = process.argv.slice(3).join(" ");
+function movie () {
 
     //if no movie is provided do a call for Mr. Nobody
     if(!term) {
@@ -106,7 +103,7 @@ function term () {
     }
 
     var queryUrl =
-    'http://www.omdbapi.com/?t=' + word + '&y=&plot=short&apikey=trilogy';
+    'http://www.omdbapi.com/?t=' + term + '&y=&plot=short&apikey=trilogy';
     
     axios.get(queryUrl)
     .then(function(response) {
