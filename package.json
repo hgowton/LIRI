@@ -1,7 +1,7 @@
 {
   "name": "LIRI",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Overview  **LIRI** is a node App designed to function similar to SIRI on the iPhone.  Instead of utilizing speech recognition, LIRI takes in commands through terminal to provide specific data.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,5 +23,6 @@
     "dotenv": "^8.2.0",
     "moment": "^2.24.0",
     "node-spotify-api": "^1.1.1"
-  }
+  },
+  "devDependencies": {}
 }
