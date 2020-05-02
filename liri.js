@@ -35,7 +35,7 @@ function songs (){
             //append information to the log 
             fs.appendFile("log.txt", songInfo, function(err) {
                 if (err) throw err;
-                console.log(songInfo);
+                // console.log(songInfo);
             });
       
     });
@@ -43,33 +43,35 @@ function songs (){
 
 //Bands in Town call
 function bands (){
+    //if no band is provided, will do a search for Paul McCartney
     if(!term) {
         term = "paul mccartney";
     }
     var queryUrl =
     'https://rest.bandsintown.com/artists/' + term + '/events?app_id=codingbootcamp';
-    console.log(queryUrl);
+    // console.log(queryUrl);
 
-    //makes call for Bands in town with specific artist
+    //Searches for band based on user's request
     axios.get(queryUrl)
     .then(function(response) {
-
-        for (i = 0; i < response.data.length; i++) {
+        //Finds 5 concerts for requested band
+        for (i = 0; i < 4; i++) {
             var bInfo = response.data[i]
             var time = bInfo.datetime
 
         var bandInfo = [
             "\nVenue: " + bInfo.venue.name,
             "Location: " + bInfo.venue.country + ", " + bInfo.venue.city,
-            "Date: " + bInfo.datetime].join("\n");
+            "Date: " + bInfo.datetime,
+            "________________"].join("\n");
             
             //append information to the log 
             fs.appendFile("log.txt", bandInfo, function(err) {
                 if (err) throw err;
-                console.log(bandInfo);
+                // console.log(bandInfo);
             });
 
-            console.log(moment(time).format('MMMM Do YYYY h:mm:ss a'))
+            // console.log(moment(time).format('MMMM Do YYYY h:mm:ss a'))
         }
     })
     .catch(function(error) {
@@ -107,11 +109,10 @@ function movie () {
     
     axios.get(queryUrl)
     .then(function(response) {
-        console.log(response);
         infoM = response.data
 
         var movieInfo = [
-            "Title: " + infoM.Title,
+            "\nTitle: " + infoM.Title,
             "Year:" + infoM.Year,
             "IMDB Rating: " + infoM.imdbRating,
             "Rotten Tomatoes Rating: " + infoM.Ratings[1].Value,
@@ -119,12 +120,12 @@ function movie () {
             "Native Language: " + infoM.Language,
             "Plot of Movie: " + infoM.Plot,
             "Actors: " + infoM.Actors
-        ].join("\n\n");
+        ].join("\n");
     
         //append information to the log 
         fs.appendFile("log.txt", movieInfo + divLine, function(err) {
             if (err) throw err;
-            console.log(movieInfo);
+            // console.log(movieInfo);
         });
         
     })
@@ -154,7 +155,6 @@ function newS () {
     var data = fs.readFileSync("random.txt", "utf8") 
         var dataArr = data.split(",");
         
-        // console.log("needs to happen 1st: " + dataArr[1]);
         term = dataArr[1]
     }
 
